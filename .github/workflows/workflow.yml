@@ -1,0 +1,17 @@
+name: golang workflow
+on:
+  push:
+  pull_request:
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CARGO_TERM_COLOR: always
+jobs:
+  job-1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Execute Codes
+        run: |
+          set -x
+          go version
+          for i in `ls -al .`; do if [[ -f $i/test/main.go ]];then cd $i/test; go run main.go; cd ../../; fi; done
